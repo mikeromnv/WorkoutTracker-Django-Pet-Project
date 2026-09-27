@@ -1,0 +1,119 @@
+{% extends 'workouts/base.html' %}
+
+{% block title %}Моя история — Workout Tracker{% endblock %}
+
+{% block content %}
+
+<div class="home-container">
+
+    <div class="page-header">
+
+        <div>
+            <h1>История упражнений</h1>
+
+            <p class="page-subtitle">
+                Все выполненные упражнения
+            </p>
+        </div>
+
+
+    </div>
+
+
+    {% if user_sets %}
+
+        <div class="card table-card">
+            <table class="history-table">
+
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Тренировка</th>
+                        <th>Упражнение</th>
+                        <th>Группа мышц</th>
+                        <th>Вес</th>
+                        <th>Повторения</th>
+                        <th>Дистанция</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for set in user_sets %}
+                        <tr>
+                            <td class="date-cell">
+                                {{ set.workout_exercise.workout.date|date:"d.m.Y" }}
+                            </td>
+
+                            <td>
+                                {{ set.workout_exercise.workout.name }}
+                            </td>
+
+                            <td class="exercise-cell">
+                                {{ set.workout_exercise.exercise.name }}
+                            </td>
+
+                            <td>
+                                <span class="muscle-tag">
+                                    {{ set.workout_exercise.exercise.muscle_group.name }}
+                                </span>
+                            </td>
+                            {% if set.distance %}
+
+                                <td class="muted">—</td>
+                                <td class="muted">—</td>
+
+                                <td class="value-cell">
+                                    {{ set.distance }} км
+                                </td>
+
+                            {% else %}
+
+                                <td class="value-cell">
+                                    {{ set.weight }} кг
+                                </td>
+
+                                <td class="value-cell">
+                                    {{ set.repetitions }}
+                                </td>
+
+                                <td class="muted">—</td>
+
+                            {% endif %}
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    {% else %}
+
+        <div class="card empty-state">
+
+            <div class="empty-icon">
+                <i data-lucide="dumbbell"></i>
+            </div>
+
+            <h2>Пока нет упражнений</h2>
+
+            <p>
+                Создай свою первую тренировку, чтобы начать
+                отслеживать прогресс.
+            </p>
+
+            <a
+                href="{% url 'workout_create' %}"
+                class="button empty-button"
+            >
+                <i data-lucide="plus"></i>
+                Создать тренировку
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -13,4 +13,6 @@ urlpatterns = [
     path('workout/<int:workout_id>/delete/', workout_delete, name='workout_delete'),
     path('workout_exercise/<int:workout_exercise_id>/delete/', workout_exercise_delete, name='workout_exercise_delete'),
     path('workout_set/<int:workout_set_id>/delete/', workout_set_delete, name='workout_set_delete'),
+    path('history/', history, name='history')
+
 ]

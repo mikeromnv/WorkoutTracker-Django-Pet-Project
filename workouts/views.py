@@ -233,3 +233,14 @@ def workout_set_delete(request, workout_set_id):
         workout_set.delete()
 
     return redirect('workout_detail', workout_id=workout_id)
+
+
+@login_required(login_url='login')
+def history(request):
+    user = request.user
+
+    user_sets = Set.objects.filter(
+        workout_exercise__workout__user=user
+    ).order_by('-workout_exercise__workout__date', 'workout_exercise__exercise__name')
+
+    return render(request, 'workouts/history.html', {'user_sets': user_sets})
