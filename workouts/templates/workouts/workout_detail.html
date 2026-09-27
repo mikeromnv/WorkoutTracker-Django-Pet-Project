@@ -180,13 +180,23 @@
                                 {{ forloop.counter }}
                             </span>
 
-                            <span class="set-value">
-                                {{ set.weight }} кг
-                            </span>
+                            {% if workout_exercise.exercise.muscle_group.name == 'Кардио' %}
 
-                            <span class="set-value">
-                                {{ set.repetitions }} повторений
-                            </span>
+                                <span class="set-value">
+                                    {{ set.distance }} км
+                                </span>
+
+                            {% else %}
+
+                                <span class="set-value">
+                                    {{ set.weight }} кг
+                                </span>
+
+                                <span class="set-value">
+                                    {{ set.repetitions }} повторений
+                                </span>
+
+                            {% endif %}
 
                             <form
                                 method="post"
@@ -227,20 +237,37 @@
                                 value="{{ workout_exercise.id }}"
                             >
 
-                            <input
-                                type="number"
-                                name="weight"
-                                class="set-input"
-                                placeholder="Вес, кг"
-                                step="0.01"
-                            >
+                            {% if workout_exercise.exercise.muscle_group.name == 'Кардио' %}
 
-                            <input
-                                type="number"
-                                name="repetitions"
-                                class="set-input"
-                                placeholder="Повторения"
-                            >
+                                <input
+                                    type="number"
+                                    name="distance"
+                                    class="set-input distance-input"
+                                    placeholder="Дистанция, км"
+                                    step="0.01"
+                                    min="0"
+                                >
+
+                            {% else %}
+
+                                <input
+                                    type="number"
+                                    name="weight"
+                                    class="set-input weight-input"
+                                    placeholder="Вес, кг"
+                                    step="0.01"
+                                    min="0"
+                                >
+
+                                <input
+                                    type="number"
+                                    name="repetitions"
+                                    class="set-input repetitions-input"
+                                    placeholder="Повторения"
+                                    min="1"
+                                >
+
+                            {% endif %}
 
                             <button
                                 type="submit"
